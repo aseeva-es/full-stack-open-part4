@@ -8,7 +8,13 @@ const totalLikes = (blogs) => {
   return total;
 };
 
+const favoriteBlog = (blogs) => {
+let favorite = blogs.sort((a, b) => b.likes - a.likes)
+return favorite[0];
+}
+
 module.exports = {
   dummy,
   totalLikes,
+  favoriteBlog
 };
