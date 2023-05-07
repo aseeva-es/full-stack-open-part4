@@ -39,9 +39,19 @@ const mostBlogs = (blogs) => {
   return getBestAuthor(result);
 }
 
+const mostLikes = (blogs) => {
+  var result = _.sortBy(blogs, (blog) => blog.likes);
+  console.log("mostLikes", result[result.length-1]);
+  return {
+    "author":result[result.length-1].author,
+    "likes":result[result.length-1].likes
+  };
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 };
