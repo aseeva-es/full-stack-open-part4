@@ -2,8 +2,9 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Second blog",
-    "author": "Mika",
-    "url": "https://www.mikaflowers.com/",
-    "likes": 8
+    "title": "Flower blossoms",
+    "author": "Misha",
+    "url": "https://www.flower.com/",
+    "likes": 15,
+    "userId": "648f4bffe43db1c25bdb1f84"
 }

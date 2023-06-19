@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const supertest = require('supertest');
 const app = require('../app');
-const Blog =require('../models/blog')
-const helper = require('./test_helper')
+const Blog =require('../models/blog');
+const helper = require('./test_helper');
+
 
 const api = supertest(app);
 
@@ -40,11 +41,12 @@ describe('bloge with validated properties', ()=>{
       url:'fix.com',
       author: 'Elena',
       id: 5,
+      userId: "648f5f31d08f587add436fa0"
     }
     await api
     .post('/api/blogs')
     .send(newBlog)
-    .expect(201)
+    .expect(200)
     .expect('Content-Type', /application\/json/)
   
     const blogsAtEnd = await helper.blogsInDb()
@@ -61,13 +63,14 @@ describe('blog addition', ()=>{
       url: 'fix.com',
       author: 'Elena',
       likes: 5,
-      id: 1
+      id: 1,
+      userId: "648f5f31d08f587add436fa0"
     }
   
     await api
       .post('/api/blogs')
       .send(newBlog)
-      .expect(201)
+      .expect(200)
       .expect('Content-Type', /application\/json/)
   
     const blogsAtEnd = await helper.blogsInDb()
@@ -130,8 +133,8 @@ describe('unvalidated blog is not added', ()=>{
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
   })
-
 })
+
 
 afterAll(async () => {
     await mongoose.connection.close()
