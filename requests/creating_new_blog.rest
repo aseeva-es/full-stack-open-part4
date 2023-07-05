@@ -1,10 +1,11 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY0OGY0YmZmZTQzZGIxYzI1YmRiMWY4NCIsImlhdCI6MTY4NzI1ODE4MX0.8XdZ22_BpwTumORAEly56Z6B8U_vWmQo2Qygabw24II
 
 {
-    "title": "Flower blossoms",
-    "author": "Misha",
-    "url": "https://www.flower.com/",
-    "likes": 15,
+    "title": "Hyvää juhanustaa",
+    "author": "Mika Oulainen",
+    "url": "https://www.dogs.com/",
+    "likes": 17,
     "userId": "648f4bffe43db1c25bdb1f84"
 }

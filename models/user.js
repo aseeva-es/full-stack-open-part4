@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema ({
 userSchema.path('username').validate({
     validator: function(v) {return v.length >= 3},
     message: function(props) {
-        return `${props.path} expected username length equil at least 3 '${props.value}'`;
+        return `Path ${props.path} ('${props.value}') is shorter than the minimum allowed length (3).`;
       }
 })
 

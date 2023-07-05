@@ -7,14 +7,16 @@ const initialBlogs = [
       likes: 5,
       author: 'Elena',
       url: 'fix.com',
-      id: 0
+      id: 0,
+      user: '648f5f31d08f587add436fa0'
     },
     {
       title: 'Second blog',
       likes: 8,
       author: 'Mika',
       url: 'mimi.fi',
-      id: 1
+      id: 1,
+      user: '648f5f31d08f587add436fa0'
     },
   ]
 
