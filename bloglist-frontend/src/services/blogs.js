@@ -2,6 +2,12 @@ import axios from 'axios'
 const blogsUrl = '/api/blogs'
 const usersUrl = '/api/users'
 
+let token = null
+
+const setToken = newToken => {
+  token = `Bearer ${newToken}`
+}
+
 const getAll = () => {
   const request = axios.get(blogsUrl)
   return request.then(response => response.data)
@@ -13,4 +19,4 @@ const getBlogsByUserName = (username) => {
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, getBlogsByUserName }
+export default { getAll, getBlogsByUserName, setToken }
