@@ -6,31 +6,37 @@ import loginService from "./services/login";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
+  const [newBlog, setNewBlog] = useState({
+    title: "",
+    author: "",
+    url: "",
+  });
   const [errorMessage, setErrorMessage] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    blogService.getBlogsByUserName(user ? user.username : null)
-    .then((userData) => {
-      console.log("user data", userData);
-      return userData;
-    })
-    .then((userData) => {
-      if (userData && userData.blogs) setBlogs(userData.blogs);
-      else setBlogs([]);
-    });
+    blogService
+      .getBlogsByUserName(user ? user.username : null)
+      .then((userData) => {
+        console.log("user data", userData);
+        return userData;
+      })
+      .then((userData) => {
+        if (userData && userData.blogs) setBlogs(userData.blogs);
+        else setBlogs([]);
+      });
   }, [user]);
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    if(loggedUserJSON){
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
+    const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      blogService.setToken(user.token);
     }
-  }, [])
+  }, []);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -39,10 +45,9 @@ const App = () => {
         username,
         password,
       });
-      window.localStorage
-      .setItem('loggedBlogappUser', JSON.stringify(user))
-      console.log(window.localStorage)
+      window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
 
+      blogService.setToken(user.token);
       setUser(user);
       setUsername("");
       setPassword("");
@@ -54,13 +59,13 @@ const App = () => {
     }
     console.log("logging in with", username, password);
   };
-  console.log("user: ", user, "blogs: ", blogs);
+  //console.log("user: ", user, "blogs: ", blogs);
 
-  const handleLogout = () =>{
-    if(setUser(null)){
-      window.localStorage.removeItem('loggedBlogappUser')
+  const handleLogout = () => {
+    if (setUser(null)) {
+      window.localStorage.removeItem("loggedBlogappUser");
     }
-  }
+  };
 
   const loginForm = () => {
     return (
@@ -88,6 +93,34 @@ const App = () => {
     );
   };
 
+  const addBlog = (e) => {
+    e.preventDefault();
+    console.warn(newBlog);
+    blogService.create(newBlog).then((returnedBlog) => {
+      setBlogs(blogs.concat(returnedBlog));
+      setNewBlog({
+        title: "",
+        author: "",
+        url: "",
+      });
+    });
+  };
+  const handleBlogChange = (e) => {
+    e.preventDefault();
+    setNewBlog({ ...newBlog, [e.target.name]: e.target.value });
+  };
+
+  const blogForm = () => (
+    <form onSubmit={addBlog}>
+      title:{" "}
+      <input name="title" value={newBlog.title} onChange={handleBlogChange} />
+      author:{" "}
+      <input name="author" value={newBlog.author} onChange={handleBlogChange} />
+      url: <input name="url" value={newBlog.url} onChange={handleBlogChange} />
+      <button type="submit">Create</button>
+    </form>
+  );
+
   return (
     <div>
       <h1>Blog App</h1>
@@ -97,14 +130,15 @@ const App = () => {
       {user && (
         <>
           <p>{user.name} logged in</p>
-          <h2>blogs</h2>
-          {
-          blogs
-            .map((blog) => (
-              <Blog key={blog.id} blog={blog} />
-            ))
-            }
-             <button type="submit" onClick ={handleLogout}>logout</button>
+          <button type="submit" onClick={handleLogout}>
+            logout
+          </button>
+          <h2>Blogs</h2>
+          {blogs.map((blog) => (
+            <Blog key={blog.id} blog={blog} />
+          ))}
+          <h2>Create new</h2>
+          {blogForm()}
         </>
       )}
     </div>
