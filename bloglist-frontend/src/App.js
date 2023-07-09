@@ -3,6 +3,7 @@ import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import Notification from "./components/Notification";
 import loginService from "./services/login";
+import './css/style.css';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -11,7 +12,11 @@ const App = () => {
     author: "",
     url: "",
   });
-  const [errorMessage, setErrorMessage] = useState(null);
+  //const [errorMessage, setErrorMessage] = useState(null);
+  const [notification, setNotification] = useState({
+    type: 'green',
+    message: null
+  })
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -51,10 +56,11 @@ const App = () => {
       setUser(user);
       setUsername("");
       setPassword("");
-    } catch (exception) {
-      setErrorMessage("Wrong credentials");
+    } 
+    catch (exception) {
+      setNotification({type:'warn', message: "Wrong username or password"});
       setTimeout(() => {
-        setErrorMessage(null);
+        setNotification({ message: null });
       }, 5000);
     }
     console.log("logging in with", username, password);
@@ -98,6 +104,9 @@ const App = () => {
     console.warn(newBlog);
     blogService.create(newBlog).then((returnedBlog) => {
       setBlogs(blogs.concat(returnedBlog));
+      setNotification({ type:'green', message: 'a new blog '+ returnedBlog.title + ' by ' + returnedBlog.author +' added'})
+      setTimeout(()=>{setNotification({message: null})}, 5000)
+      
       setNewBlog({
         title: "",
         author: "",
@@ -112,11 +121,17 @@ const App = () => {
 
   const blogForm = () => (
     <form onSubmit={addBlog}>
-      title:{" "}
+     <div>
+       title:{" "}
       <input name="title" value={newBlog.title} onChange={handleBlogChange} />
+      </div>
+      <div>
       author:{" "}
       <input name="author" value={newBlog.author} onChange={handleBlogChange} />
+      </div>
+      <div>
       url: <input name="url" value={newBlog.url} onChange={handleBlogChange} />
+      </div>
       <button type="submit">Create</button>
     </form>
   );
@@ -124,7 +139,7 @@ const App = () => {
   return (
     <div>
       <h1>Blog App</h1>
-      <Notification text={errorMessage} />
+      <Notification text={notification.message} type = {notification.type} />
       {!user && loginForm()}
 
       {user && (
@@ -138,7 +153,11 @@ const App = () => {
             <Blog key={blog.id} blog={blog} />
           ))}
           <h2>Create new</h2>
-          {blogForm()}
+          
+         { blogForm()}  
+            
+            
+
         </>
       )}
     </div>

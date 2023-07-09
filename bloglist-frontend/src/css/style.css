@@ -1,0 +1,13 @@
+
+.green, .message{
+    color: green;
+    border: 2px solid green;
+    padding: 1em;
+
+}
+
+.warn {
+    color: red;
+    border: 2px solid red;
+    padding: 1em;
+}
