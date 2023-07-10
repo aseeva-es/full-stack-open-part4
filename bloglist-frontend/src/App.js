@@ -3,20 +3,17 @@ import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import Notification from "./components/Notification";
 import loginService from "./services/login";
-import './css/style.css';
+import "./css/style.css";
+import LoginForm from "./components/LoginForm";
+import Togglable from "./components/Togglable";
+import BlogForm from "./components/BlogForm";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
-  const [newBlog, setNewBlog] = useState({
-    title: "",
-    author: "",
-    url: "",
-  });
-  //const [errorMessage, setErrorMessage] = useState(null);
   const [notification, setNotification] = useState({
-    type: 'green',
-    message: null
-  })
+    type: "green",
+    message: null,
+  });
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -56,16 +53,14 @@ const App = () => {
       setUser(user);
       setUsername("");
       setPassword("");
-    } 
-    catch (exception) {
-      setNotification({type:'warn', message: "Wrong username or password"});
+    } catch (exception) {
+      setNotification({ type: "warn", message: "Wrong username or password" });
       setTimeout(() => {
         setNotification({ message: null });
       }, 5000);
     }
     console.log("logging in with", username, password);
   };
-  //console.log("user: ", user, "blogs: ", blogs);
 
   const handleLogout = () => {
     if (setUser(null)) {
@@ -73,74 +68,38 @@ const App = () => {
     }
   };
 
-  const loginForm = () => {
-    return (
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-    );
-  };
-
-  const addBlog = (e) => {
-    e.preventDefault();
+  const addBlog = (newBlog) => {
     console.warn(newBlog);
     blogService.create(newBlog).then((returnedBlog) => {
       setBlogs(blogs.concat(returnedBlog));
-      setNotification({ type:'green', message: 'a new blog '+ returnedBlog.title + ' by ' + returnedBlog.author +' added'})
-      setTimeout(()=>{setNotification({message: null})}, 5000)
-      
-      setNewBlog({
-        title: "",
-        author: "",
-        url: "",
+      setNotification({
+        type: "green",
+        message:
+          "a new blog " +
+          returnedBlog.title +
+          " by " +
+          returnedBlog.author +
+          " added",
       });
+      setTimeout(() => {
+        setNotification({ message: null });
+      }, 5000);
     });
   };
-  const handleBlogChange = (e) => {
-    e.preventDefault();
-    setNewBlog({ ...newBlog, [e.target.name]: e.target.value });
-  };
-
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-     <div>
-       title:{" "}
-      <input name="title" value={newBlog.title} onChange={handleBlogChange} />
-      </div>
-      <div>
-      author:{" "}
-      <input name="author" value={newBlog.author} onChange={handleBlogChange} />
-      </div>
-      <div>
-      url: <input name="url" value={newBlog.url} onChange={handleBlogChange} />
-      </div>
-      <button type="submit">Create</button>
-    </form>
-  );
 
   return (
     <div>
       <h1>Blog App</h1>
-      <Notification text={notification.message} type = {notification.type} />
-      {!user && loginForm()}
+      <Notification text={notification.message} type={notification.type} />
+      {!user && (
+        <LoginForm
+          username={username}
+          password={password}
+          onSubmit={handleLogin}
+          onChangeUsername={({ target }) => setUsername(target.value)}
+          onChangePassword={({ target }) => setPassword(target.value)}
+        ></LoginForm>
+      )}
 
       {user && (
         <>
@@ -153,11 +112,12 @@ const App = () => {
             <Blog key={blog.id} blog={blog} />
           ))}
           <h2>Create new</h2>
-          
-         { blogForm()}  
-            
-            
 
+          {
+            <Togglable buttonLabel="new blog">
+              <BlogForm onSubmit={addBlog} />
+            </Togglable>
+          }
         </>
       )}
     </div>
