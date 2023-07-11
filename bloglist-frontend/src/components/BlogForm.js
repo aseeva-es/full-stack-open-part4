@@ -25,22 +25,34 @@ const BlogForm = (props) => {
           });
         }}>
       <div>
-        title:{" "}
-        <input name="title" value={newBlog.title} onChange={handleBlogChange} />
+        title{" "}
+        <input
+         name="title" value={newBlog.title}
+          onChange={handleBlogChange} 
+          className="mt-1 px-4 py-3  border border-orange-400 block w-1/2 rounded sm:text-sm"
+          />
       </div>
       <div>
-        author:{" "}
+        author{" "}
         <input
           name="author"
           value={newBlog.author}
           onChange={handleBlogChange}
+          className="mt-1 px-4 py-3  border border-orange-400 block w-1/2 rounded sm:text-sm"
+
         />
       </div>
       <div>
-        url:{" "}
-        <input name="url" value={newBlog.url} onChange={handleBlogChange} />
+        url{" "}
+        <input 
+        name="url"
+         value={newBlog.url}
+         onChange={handleBlogChange}
+         className="mt-1 px-4 py-3  border border-orange-400 block w-1/2 rounded sm:text-sm mb-2"
+         />
       </div>
-      <button type="submit">Create</button>
+      <button type="submit" className="border-solid border border-orange-400 w-24 text-sm p-2 rounded mb-2">
+            Create</button>
     </form>
   )};
 

@@ -30,7 +30,7 @@ usersRouter.get('/', async (request, response) => {
   })
 
 usersRouter.get('/:username', async (request, response) => {
-  const users = await User.findOne({username: request.params.username}).populate('blogs', {title: 1, author: 1});
+  const users = await User.findOne({username: request.params.username}).populate('blogs');
   response.json(users);
   })
 

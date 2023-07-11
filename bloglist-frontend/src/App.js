@@ -8,6 +8,7 @@ import LoginForm from "./components/LoginForm";
 import Togglable from "./components/Togglable";
 import BlogForm from "./components/BlogForm";
 
+
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [notification, setNotification] = useState({
@@ -88,8 +89,8 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>Blog App</h1>
+    <div className="container flex flex-col p-6 gap-2 h-screen ">
+      <p className="text-4xl mb-2">Blog App</p>
       <Notification text={notification.message} type={notification.type} />
       {!user && (
         <LoginForm
@@ -103,18 +104,18 @@ const App = () => {
 
       {user && (
         <>
-          <p>{user.name} logged in</p>
-          <button type="submit" onClick={handleLogout}>
+          <p className="text-sm">{user.name} logged in</p>
+          <button type="submit" onClick={handleLogout} className="border-solid border border-orange-400 w-24 text-sm py-1 rounded mb-2">
             logout
           </button>
-          <h2>Blogs</h2>
+          <h2 className="text-xl">Blogs</h2>
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} />
+              <Blog key={blog.id} blog={blog} user = {user}></Blog>
           ))}
-          <h2>Create new</h2>
+          <h2 className="text-xl mt-2">Create new</h2>
 
           {
-            <Togglable buttonLabel="new blog">
+            <Togglable buttonLabel="new blog" >
               <BlogForm onSubmit={addBlog} />
             </Togglable>
           }
