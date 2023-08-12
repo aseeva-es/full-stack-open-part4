@@ -25,7 +25,7 @@ response.status(201).json(savedUser)
 })
 
 usersRouter.get('/', async (request, response) => {
-  const users = await User.find({}).populate('blogs', {title: 1, author: 1});
+  const users = await User.find({}).populate('blogs', {title: 1, author: 1, likes: 0});
   response.json(users);
   })
 

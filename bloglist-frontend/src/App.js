@@ -88,6 +88,52 @@ const App = () => {
     });
   };
 
+  const addLike = (blog) => {
+    let newLikes = 1;
+    if (!blog) return;
+    if (typeof blog.likes === 'number') {
+      newLikes = blog.likes + 1;
+    } 
+    const newBlog = {...blog, likes: newLikes};
+    blogService.update(newBlog)
+    .then((updatedBlog)=>{
+
+      // const newBlogs = blogs.filter((blog)=>blog.id !== updatedBlog.id).concat(updatedBlog)
+      const index = blogs.findIndex((item)=>item.id===updatedBlog.id);
+      const newBlogs = [...blogs];
+      newBlogs.splice(index,1, updatedBlog)
+      setBlogs(newBlogs);
+
+      setNotification({
+        type: "green",
+        message:
+          "blog updated"  
+      });
+      setTimeout(() => {
+        setNotification({ message: null });
+      }, 5000);
+    })
+  }
+
+  const removePost = (post)=>{
+    blogService.remove(post)
+    .then(()=>{
+      const newBlogs = blogs.filter((blog)=>blog.id!==post.id);
+      setBlogs(newBlogs);
+      
+      setNotification({
+        type:"green",
+        message: "post deleted"
+      });
+      
+      setTimeout(()=>{
+        setNotification({ message: null });
+      }, 5000)
+    })
+    
+
+  }
+
   return (
     <div className="container flex flex-col p-6 gap-2 h-screen ">
       <p className="text-4xl mb-2">Blog App</p>
@@ -109,8 +155,10 @@ const App = () => {
             logout
           </button>
           <h2 className="text-xl">Blogs</h2>
-          {blogs.map((blog) => (
-              <Blog key={blog.id} blog={blog} user = {user}></Blog>
+          {blogs
+          .sort((a,b) => b.likes - a.likes)
+          .map((blog) => (
+            <Blog key={blog.id} blog={blog} user={user} addLike = { addLike } removePost={removePost}></Blog>
           ))}
           <h2 className="text-xl mt-2">Create new</h2>
 
