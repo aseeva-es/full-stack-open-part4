@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import Button from './Button'
+import React from 'react'
 
-const Blog = ({ blog, user, addLike, removePost }) => {
+const Blog = ({ blog, user, addLike, likesVisible, removePost }) => {
   console.log(blog)
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(likesVisible || false);
 
 
   const handleClick = () => {
@@ -21,7 +22,7 @@ const Blog = ({ blog, user, addLike, removePost }) => {
   }
 
   return (
-    <div className='flex flex-col border-solid border border-orange-400 p-4 max-w-3xl'>
+    <div className='blog flex flex-col border-solid border border-orange-400 p-4 max-w-3xl'>
       <div className='flex flex-row justify-between'>
         <div>
           {blog.title} {blog.author}
@@ -33,7 +34,7 @@ const Blog = ({ blog, user, addLike, removePost }) => {
         <div className='flex flex-col gap-4'>
 
 
-          <div className=''>{blog.url}</div>
+          <div className='blog-url'>{blog.url}</div>
           <div className='flex flex-row gap-8 align-center'>
             <div>likes {blog.likes}</div>
             <Button onClick={handleLikes}>{'Like'}</Button>

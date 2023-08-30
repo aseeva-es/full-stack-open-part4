@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import React from 'react'
 
-const Togglable = React.forwardRef((props) => {
+const Togglable = React.forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false)
 
   const hideWhenVisible = { display: visible ? 'none' : '' }
@@ -18,7 +18,7 @@ const Togglable = React.forwardRef((props) => {
         <button onClick={toggleVisibility} className='border-solid border border-orange-400 w-24 text-sm p-2 rounded mb-2'>
           {String(props.buttonLabel)}</button>
       </div>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className="togglableContent">
         {props.children}
         <button onClick={toggleVisibility} className='border-solid border border-orange-400 w-24 text-sm p-2 rounded mb-2'>
           Cancel</button>
