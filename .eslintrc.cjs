@@ -3,7 +3,8 @@ module.exports = {
         "browser": true,
         "commonjs": true,
         "es2021": true,
-        "jest": true
+        "jest": true,
+        "cypress/globals": true
     },
     "extends": 'eslint:recommended',
     "overrides": [
@@ -11,6 +12,9 @@ module.exports = {
     "parserOptions": {
         "ecmaVersion": "latest"
     },
+    "plugins": [
+        "react", "jest", "cypress"
+    ],
     "rules": {
         "indent": [
             "error",
@@ -18,7 +22,7 @@ module.exports = {
         ],
         "eqeqeq": "error",
         "no-trailing-spaces": [
-            "error", "always"
+            "error"
         ],
         "arrow-spacing": [
             "error", {"before": true, "after": true}

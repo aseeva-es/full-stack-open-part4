@@ -12,10 +12,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "vite --host",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -42,6 +44,8 @@
     "@testing-library/jest-dom": "^6.1.2",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "cypress": "^13.0.0",
+    "eslint-plugin-cypress": "^2.14.0",
     "jest-environment-jsdom": "^29.6.4",
     "tailwindcss": "^3.3.2"
   },

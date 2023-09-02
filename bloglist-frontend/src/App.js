@@ -20,15 +20,16 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
+    if (!user || !user.username) return
     blogService
-      .getBlogsByUserName(user ? user.username : null)
+      .getBlogsByUserName(user.username)
       .then((userData) => {
         console.log('user data', userData)
         return userData
       })
       .then((userData) => {
         if (userData && userData.blogs) setBlogs(userData.blogs)
-        else setBlogs([])
+    
       })
   }, [user])
 
@@ -42,12 +43,15 @@ const App = () => {
   }, [])
 
   const handleLogin = async (event) => {
+    console.log('handleLogin')
+
     event.preventDefault()
     try {
       const user = await loginService.login({
         username,
         password,
       })
+      console.log('handleLogin user', user)
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
 
       blogService.setToken(user.token)
@@ -56,6 +60,7 @@ const App = () => {
       setPassword('')
     } catch (exception) {
       setNotification({ type: 'warn', message: 'Wrong username or password' })
+      // handleLogout()
       setTimeout(() => {
         setNotification({ message: null })
       }, 5000)
@@ -64,9 +69,9 @@ const App = () => {
   }
 
   const handleLogout = () => {
-    if (setUser(null)) {
-      window.localStorage.removeItem('loggedBlogappUser')
-    }
+    console.log('Logout', user)
+    setUser(null)
+    window.localStorage.removeItem('loggedBlogappUser')
   }
 
   const addBlog = (newBlog) => {
