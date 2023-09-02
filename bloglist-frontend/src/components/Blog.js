@@ -4,7 +4,7 @@ import React from 'react'
 
 const Blog = ({ blog, user, addLike, likesVisible, removePost }) => {
   console.log(blog)
-  const [visible, setVisible] = useState(likesVisible || false);
+  const [visible, setVisible] = useState(likesVisible || false)
 
 
   const handleClick = () => {
@@ -37,7 +37,7 @@ const Blog = ({ blog, user, addLike, likesVisible, removePost }) => {
           <div className='blog-url'>{blog.url}</div>
           <div className='flex flex-row gap-8 align-center'>
             <div>likes {blog.likes}</div>
-            <Button onClick={handleLikes}>{'Like'}</Button>
+            <Button onClick={handleLikes} className='likes-btn'>{'Like'}</Button>
           </div>
           {user.name}
 

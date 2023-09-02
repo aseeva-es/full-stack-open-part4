@@ -31,6 +31,7 @@ const BlogForm = (props) => {
         <input
           name='title' value={newBlog.title}
           onChange={handleBlogChange}
+          id='title'
           className='mt-1 px-4 py-3  border border-orange-400 block w-1/2 rounded sm:text-sm'
         />
       </div>
@@ -40,6 +41,7 @@ const BlogForm = (props) => {
           name='author'
           value={newBlog.author}
           onChange={handleBlogChange}
+          id='author'
           className='mt-1 px-4 py-3  border border-orange-400 block w-1/2 rounded sm:text-sm'
 
         />
@@ -49,11 +51,12 @@ const BlogForm = (props) => {
         <input
           name='url'
           value={newBlog.url}
+          id='url'
           onChange={handleBlogChange}
           className='mt-1 px-4 py-3  border border-orange-400 block w-1/2 rounded sm:text-sm mb-2'
         />
       </div>
-      <button type='submit' className='border-solid border border-orange-400 w-24 text-sm p-2 rounded mb-2'>
+      <button type='submit' className='create-btn border-solid border border-orange-400 w-24 text-sm p-2 rounded mb-2'>
         Create</button>
     </form>
   )

@@ -3,7 +3,7 @@
 const LoginForm = (props) => {
 
   return (
-    <form onSubmit={props.handleLogin}>
+    <form onSubmit={props.onSubmit}>
       <div>
         username
         <input
@@ -11,6 +11,7 @@ const LoginForm = (props) => {
           value={props.username}
           name='Username'
           onChange={props.onChangeUsername}
+          id='username'
           className='mt-1 px-4 py-3  border border-orange-400 block w-1/2 rounded sm:text-sm'
 
         />
@@ -23,11 +24,12 @@ const LoginForm = (props) => {
           value={props.password}
           name='Password'
           onChange={props.onChangePassword}
-          className='mt-1 px-4 py-3  border border-orange-400 block w-1/2 rounded sm:text-sm'
+          id='password'
+          className=' mt-1 px-4 py-3  border border-orange-400 block w-1/2 rounded sm:text-sm'
 
         />
       </div>
-      <button className='border-solid border border-orange-400 w-24 sm:text-sm rounded p-2' type='submit'>Login</button>
+      <button className='border-solid border border-orange-400 w-24 sm:text-sm rounded p-2' type='submit' id="login-button">Login</button>
     </form>
   )
 }
